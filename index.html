@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meesho Video Downloader</title>
+</head>
+<body>
+  <h2>Meesho Video Downloader</h2>
+  <input id="url" placeholder="Paste Meesho link" style="width:300px;">
+  <button onclick="downloadVid()">Download</button>
+
+  <script>
+    const API_BASE = "https://meesho-video-downloader-production.up.railway.app";
+
+    async function downloadVid() {
+      const url = document.getElementById('url').value;
+      const res = await fetch(API_BASE + "/api/download", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ url })
+      });
+      const blob = await res.blob();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "meesho_video.mp4";
+      a.click();
+    }
+  </script>
+</body>
+</html>
